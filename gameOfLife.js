@@ -27,6 +27,10 @@ function initialiseGrid(rows, columns) {
     }
     grid.push(row);
   }
+  displayGrid(grid);
+}
+
+function displayGrid(grid) {
   console.log(grid);
 }
 
