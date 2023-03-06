@@ -1,5 +1,5 @@
-var grid = [];
-
+var grid1 = [];
+var grid2 = [];
 function main() {
   console.log("Hello");
   var m = prompt("Enter number of rows");
@@ -17,12 +17,14 @@ function main() {
 function startGameOfLife(rows, columns, ticks) {
   initialiseGrid(rows, columns);
   console.log("Initial Grid");
-  displayGrid(grid);
+  displayGrid(grid1);
   for (let index = 0; index < ticks; index++) {
     var tickNumber = index + 1;
     console.log("Tick number: ", tickNumber);
-    manipulateGrid(grid);
-    displayGrid(grid);
+    console.log("grid 1: ", grid1);
+    console.log("grid 2: ", grid2);
+    manipulateGrid(grid1);
+    displayGrid(grid2);
   }
 }
 
@@ -33,8 +35,9 @@ function initialiseGrid(rows, columns) {
       var cell = Math.round(Math.random());
       row.push(cell);
     }
-    grid.push(row);
+    grid1.push(row);
   }
+  grid2 = grid1;
 }
 
 function displayGrid(grid) {
@@ -47,14 +50,20 @@ function manipulateGrid(grid) {
     for (let columnIndex = 0; columnIndex < row.length; columnIndex++) {
       var cell = row[columnIndex];
       if (isLive(cell)) {
-        console.log("Cell is live");
         var aliveNeighbours = getAliveNeighbours(grid, rowIndex, columnIndex);
-        console.log("Alive neighbours: ", aliveNeighbours);
+        if (aliveNeighbours == 2 || aliveNeighbours == 3) {
+        } else {
+          grid2[rowIndex][columnIndex] = 0;
+        }
       } else {
-        console.log("Cell is dead");
+        var aliveNeighbours = getAliveNeighbours(grid, rowIndex, columnIndex);
+        if (aliveNeighbours == 3) {
+          grid2[rowIndex][columnIndex] = 1;
+        }
       }
     }
   }
+  grid1 = grid2;
 }
 
 function isLive(cell) {
